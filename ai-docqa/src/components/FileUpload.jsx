@@ -9,10 +9,9 @@ import PdfPreview from "./PdfPreview";
  * - onUpload: (file: File) => void
  * - errorMessage: string|null
  *
- * Note: with multi-PDF support, this component can be used repeatedly —
- * each successful upload adds a new tab in DocumentTabs (see App.jsx).
- * After a successful upload, the file input resets so another PDF can
- * be selected immediately.
+ * UPDATED: selecting a valid PDF now uploads it immediately — no
+ * separate "Upload PDF" click required. Choosing a non-PDF file still
+ * shows a validation error and does NOT trigger an upload.
  */
 function FileUpload({ uploadedFile, onUpload, errorMessage }) {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -34,11 +33,11 @@ function FileUpload({ uploadedFile, onUpload, errorMessage }) {
 
     setValidationError(null);
     setSelectedFile(file);
+    onUpload(file); // auto-upload as soon as a valid PDF is chosen
   };
 
-  const handleUploadClick = () => {
-    if (!selectedFile) return;
-    onUpload(selectedFile);
+  const handleRetry = () => {
+    if (selectedFile) onUpload(selectedFile);
   };
 
   const isUploading = uploadedFile.status === "uploading";
@@ -58,18 +57,15 @@ function FileUpload({ uploadedFile, onUpload, errorMessage }) {
           accept="application/pdf,.pdf"
           onChange={handleFileChange}
           disabled={isUploading}
+          className="file-upload__native-input"
         />
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={handleUploadClick}
-          disabled={!selectedFile || isUploading}
-        >
-          {isUploading ? "Uploading..." : "Upload PDF"}
-        </button>
+
+        <label htmlFor="pdf-input" className={`btn btn-primary ${isUploading ? "btn-primary--disabled" : ""}`}>
+          {isUploading ? "Uploading..." : "Choose File"}
+        </label>
       </div>
 
-      {selectedFile && !isUploading && (
+      {selectedFile && !isUploading && !isSuccess && !errorMessage && (
         <p className="file-upload__filename">Selected: {selectedFile.name}</p>
       )}
 
@@ -96,14 +92,13 @@ function FileUpload({ uploadedFile, onUpload, errorMessage }) {
         <div className="file-upload__status file-upload__status--error">
           <span>{errorMessage}</span>
           {selectedFile && (
-            <button type="button" className="btn btn-retry" onClick={handleUploadClick}>
+            <button type="button" className="btn btn-retry" onClick={handleRetry}>
               Retry
             </button>
           )}
         </div>
       )}
 
-      {/* Nice-to-have: PDF preview, rendered via browser's native PDF viewer */}
       <PdfPreview file={selectedFile} />
     </div>
   );
