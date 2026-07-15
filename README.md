@@ -232,3 +232,13 @@ being included in the final app.
 ## Live Demo
 - Frontend: https://ai-document-qa-orpin.vercel.app
 - Backend: https://ai-document-qa-backend.onrender.com
+
+
+## UI Design Notes
+
+The interface uses a dark-only theme (true black background, no light 
+mode) with a navbar-style header, pill-shaped buttons with a 
+right-to-left hover sweep effect, and stadium-shaped chat bubbles. 
+PDF upload is automatic on file selection — no separate upload button 
+click required. A subtle ambient background animation (slow-drifting 
+blurred glows) adds visual polish without being distracting.
