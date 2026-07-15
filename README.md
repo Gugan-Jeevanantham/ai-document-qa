@@ -227,3 +227,8 @@ being included in the final app.
 | PDF Parsing | pdf-parse                          |
 | AI Model  | Groq API — Llama 3.3 70B Versatile   |
 | File Upload | Multer                             |
+
+
+## Live Demo
+- Frontend: https://ai-document-qa-orpin.vercel.app
+- Backend: https://ai-document-qa-backend.onrender.com
