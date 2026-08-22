@@ -138,8 +138,10 @@ ${doc.text}`;
     res.setHeader("Connection", "keep-alive");
     res.flushHeaders();
 
+    console.log("USING MODEL:", "openai/gpt-oss-120b");
     const stream = await groq.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
+      // model: "llama-3.3-70b-versatile",
+         model: "openai/gpt-oss-120b",
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: question },
