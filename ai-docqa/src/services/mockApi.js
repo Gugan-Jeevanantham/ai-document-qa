@@ -78,4 +78,3 @@ export function mockAskQuestion(documentId, question) {
     }, 1500);
   });
 }
-
