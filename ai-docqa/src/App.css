@@ -384,7 +384,12 @@ body::after { background: var(--gradient-end); bottom: -140px; right: -100px; }
 .preview-panel__close:hover { color: var(--color-text); }
 
 .preview-panel__body { flex: 1; overflow: auto; display: flex; }
-.preview-panel__pdf { width: 100%; height: 100%; border: none; }
+.preview-panel__pdf {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
 .preview-panel__image { width: 100%; height: auto; object-fit: contain; margin: auto; }
 
 .preview-panel__fallback { margin: auto; text-align: center; padding: 30px; color: var(--color-text-muted); }

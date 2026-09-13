@@ -87,10 +87,9 @@ export default function PreviewPanel({ doc, onClose }) {
 
       <div className="preview-panel__body">
         {doc.fileType === "pdf" && objectUrl && (
-          <embed
+          <iframe
             key={isMobile ? "pdf-mobile" : "pdf-desktop"}
             src={`${objectUrl}#toolbar=0&navpanes=0`}
-            type="application/pdf"
             className="preview-panel__pdf"
             title="PDF preview"
           />
