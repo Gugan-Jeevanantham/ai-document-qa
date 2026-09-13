@@ -86,45 +86,54 @@ export default function PreviewPanel({ doc, onClose }) {
       </div>
 
       <div className="preview-panel__body">
-        {doc.fileType === "pdf" && objectUrl && (
-          <iframe
-            key={isMobile ? "pdf-mobile" : "pdf-desktop"}
-            src={`${objectUrl}#toolbar=0&navpanes=0`}
-            className="preview-panel__pdf"
-            title="PDF preview"
-          />
-        )}
+  {doc.fileType?.toLowerCase() === "pdf" && objectUrl && (
+    <iframe
+      key={isMobile ? "pdf-mobile" : "pdf-desktop"}
+      src={`${objectUrl}#toolbar=0&navpanes=0`}
+      className="preview-panel__pdf"
+      title="PDF preview"
+    />
+  )}
 
-        {doc.fileType === "image" && objectUrl && (
-          <img src={objectUrl} alt={doc.fileName} className="preview-panel__image" />
-        )}
+  {doc.fileType?.toLowerCase() === "image" && objectUrl && (
+    <img src={objectUrl} alt={doc.fileName} className="preview-panel__image" />
+  )}
 
-        {isParsing && (
-          <div className="preview-panel__loading">
-            <span className="spinner" aria-hidden="true"></span>
-            <p>Preparing preview...</p>
-          </div>
-        )}
+  {isParsing && (
+    <div className="preview-panel__loading">
+      <span className="spinner" aria-hidden="true"></span>
+      <p>Preparing preview...</p>
+    </div>
+  )}
 
-        {parseError && (
-          <div className="preview-panel__fallback">
-            <span className="preview-panel__fallback-icon">⚠️</span>
-            <p>{parseError}</p>
-          </div>
-        )}
+  {parseError && (
+    <div className="preview-panel__fallback">
+      <span className="preview-panel__fallback-icon">⚠️</span>
+      <p>{parseError}</p>
+    </div>
+  )}
 
-        {excelHtml && !isParsing && (
-          <div className="preview-panel__excel" dangerouslySetInnerHTML={{ __html: excelHtml }} />
-        )}
+  {excelHtml && !isParsing && (
+    <div className="preview-panel__excel" dangerouslySetInnerHTML={{ __html: excelHtml }} />
+  )}
 
-        {wordHtml && !isParsing && (
-          <div className="preview-panel__word" dangerouslySetInnerHTML={{ __html: wordHtml }} />
-        )}
+  {wordHtml && !isParsing && (
+    <div className="preview-panel__word" dangerouslySetInnerHTML={{ __html: wordHtml }} />
+  )}
 
-        {textContent !== null && !isParsing && (
-          <pre className="preview-panel__text">{textContent}</pre>
-        )}
-      </div>
+  {textContent !== null && !isParsing && (
+    <pre className="preview-panel__text">{textContent}</pre>
+  )}
+
+  {/* Fallback: nothing matched at all */}
+  {!isParsing && !parseError && !excelHtml && !wordHtml && textContent === null &&
+    doc.fileType?.toLowerCase() !== "pdf" && doc.fileType?.toLowerCase() !== "image" && (
+    <div className="preview-panel__fallback">
+      <span className="preview-panel__fallback-icon">⚠️</span>
+      <p>Preview not available for this file type ({doc.fileType || "unknown"}).</p>
+    </div>
+  )}
+</div>
     </div>
   );
 }
