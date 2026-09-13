@@ -49,11 +49,12 @@ function App() {
 
     try {
       const [result] = await Promise.all([mockUploadPdf(file), minDelay]);
+      console.log("UPLOAD RESULT:", result);
       const newDoc = {
         documentId: result.documentId,
         fileName: result.fileName,
         pageCount: result.pageCount,
-        fileType: result.fileType,
+        fileType: "pdf",
         file,
       };
 
