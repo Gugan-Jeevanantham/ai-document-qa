@@ -2,4 +2,4 @@
  import react from '@vitejs/plugin-react' 
  
  export default 
- defineConfig({ base: '/ai-document-qa/', plugins: [react()], })
+ defineConfig({ plugins: [react()], })
