@@ -55,32 +55,32 @@ function ConversationHistory({ messages, isAiLoading, onSuggestionClick, hasDocu
   if (messages.length === 0) {
   return (
     <div className="conversation-history conversation-history--empty">
-      <div className="message-row message-row--center">
-        <AiAvatar />
-        <div className="ready-card">
-          <p className="ready-card__title">I'm ready! You can ask me anything about this document.</p>
-          {hasDocument && (
-            <>
-              <p className="ready-card__label">Try asking something like:</p>
-              <div className="ready-card__suggestions">
-                {SUGGESTIONS.map((s, i) => (
-                  <button
-                    type="button"
-                    key={i}
-                    className="suggestion-chip"
-                    onClick={() => onSuggestionClick?.(s.text)}
-                  >
-                    <span className="suggestion-chip__icon">{s.icon}</span>
-                    <span className="suggestion-chip__text">{s.text}</span>
-                    <svg className="suggestion-chip__arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="9 18 15 12 9 6" />
-                    </svg>
-                  </button>
-                ))}
-              </div>
-            </>
-          )}
+      <div className="ready-card">
+        <div className="ready-card__icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 2 L14.5 8.5 L21 11 L14.5 13.5 L12 20 L9.5 13.5 L3 11 L9.5 8.5 Z" />
+          </svg>
         </div>
+        <p className="ready-card__title">Ready when you are</p>
+        <p className="ready-card__subtitle">Ask anything about this document, or try one of these:</p>
+        {hasDocument && (
+          <div className="ready-card__suggestions">
+            {SUGGESTIONS.map((s, i) => (
+              <button
+                type="button"
+                key={i}
+                className={`suggestion-chip ${i === 0 ? "suggestion-chip--primary" : ""}`}
+                onClick={() => onSuggestionClick?.(s.text)}
+              >
+                <span className="suggestion-chip__icon">{s.icon}</span>
+                <span className="suggestion-chip__text">{s.text}</span>
+                <svg className="suggestion-chip__arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -88,46 +88,19 @@ function ConversationHistory({ messages, isAiLoading, onSuggestionClick, hasDocu
 
   return (
     <div className="conversation-history">
-      {messages.map((msg, idx) => (
-        <div key={idx} className={`message-row message-row--${msg.role === "user" ? "user" : "ai"}`}>
-          {msg.role === "ai" && <AiAvatar />}
-
-          <div className={`chat-bubble chat-bubble--${msg.role === "user" ? "user" : "ai"}`}>
-            {msg.role === "ai" ? (
-              <div className="chat-bubble__markdown">
-                <ReactMarkdown>{msg.text}</ReactMarkdown>
-              </div>
-            ) : (
-              <p className="chat-bubble__text">{msg.text}</p>
-            )}
-
-            {msg.timestamp && <span className="chat-bubble__time">{formatTime(msg.timestamp)}</span>}
-
-            {msg.text && (
-              <button
-                type="button"
-                className="chat-bubble__copy"
-                onClick={() => handleCopy(msg.text, idx)}
-                aria-label="Copy message"
-                title="Copy"
-              >
-                {copiedIdx === idx ? (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="20 6 9 17 4 12" />
-                  </svg>
-                ) : (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="9" y="9" width="12" height="12" rx="2" ry="2" />
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                  </svg>
-                )}
-              </button>
-            )}
-          </div>
-
-          {msg.role === "user" && <UserAvatar />}
+     {messages.map((msg, idx) => (
+  <div key={idx} className={`message-row message-row--${msg.role === "user" ? "user" : "ai"}`}>
+    <div className={`chat-bubble chat-bubble--${msg.role === "user" ? "user" : "ai"}`}>
+      {msg.role === "ai" ? (
+        <div className="chat-bubble__markdown">
+          <ReactMarkdown>{msg.text}</ReactMarkdown>
         </div>
-      ))}
+      ) : (
+        <p className="chat-bubble__text">{msg.text}</p>
+      )}
+    </div>
+  </div>
+))}
       <div ref={bottomRef} />
     </div>
   );

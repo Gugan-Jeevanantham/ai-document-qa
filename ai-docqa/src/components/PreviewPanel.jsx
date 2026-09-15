@@ -85,14 +85,31 @@ export default function PreviewPanel({ doc, onClose }) {
         </button>
       </div>
 
-      <div className="preview-panel__body">
+  <div className="preview-panel__body">
   {doc.fileType?.toLowerCase() === "pdf" && objectUrl && (
-    <iframe
-      key={isMobile ? "pdf-mobile" : "pdf-desktop"}
-      src={`${objectUrl}#toolbar=0&navpanes=0`}
-      className="preview-panel__pdf"
-      title="PDF preview"
-    />
+    isMobile ? (
+      <div className="preview-panel__mobile-pdf">
+        <span className="preview-panel__mobile-pdf-icon" aria-hidden="true">📄</span>
+        <p className="preview-panel__mobile-pdf-text">
+          PDF preview isn't supported inline on this device.
+        </p>
+        <a
+          href={objectUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="preview-panel__mobile-pdf-btn"
+        >
+          Open PDF
+        </a>
+      </div>
+    ) : (
+      <iframe
+        key="pdf-desktop"
+        src={`${objectUrl}#toolbar=0&navpanes=0`}
+        className="preview-panel__pdf"
+        title="PDF preview"
+      />
+    )
   )}
 
   {doc.fileType?.toLowerCase() === "image" && objectUrl && (
