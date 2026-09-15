@@ -64,7 +64,7 @@ function App() {
 }, []);
 
   const handleUpload = async (file) => {
-    setBanner({ type: "loading", text: `Uploading ${file.name}...` });
+    setBanner({ type: "loading", text: `Uploading...` });
     setUploadStatus({ name: file.name, status: "uploading" });
 
     const minDelay = new Promise((resolve) => setTimeout(resolve, 3500));
@@ -84,7 +84,8 @@ function App() {
       setActiveDocumentId(newDoc.documentId);
       setMessagesByDoc((prev) => ({ ...prev, [newDoc.documentId]: [] }));
       setUploadStatus({ name: result.fileName, status: "success" });
-      setBanner({ type: "success", text: `${result.fileName} uploaded — ready for questions.` });
+      // setBanner({ type: "success", text: `${result.fileName} uploaded — ready for questions.` });
+      setBanner({ type: "success", text: `Upload Successful!` });
     } catch (err) {
       setUploadStatus({ name: file.name, status: "error" });
       setBanner({ type: "error", text: err.message || "Something went wrong while uploading." });
@@ -177,14 +178,14 @@ function App() {
           </span>
           <div className="app-topbar__text">
             <h1 className="app-topbar__title">DOCUMENT <span className="app-topbar__title-accent">QA</span></h1>
-            <p className="app-topbar__subtitle">Ask Questions! Get Instant Answers From Your Document.</p>
+            {/* <p className="app-topbar__subtitle">Ask Questions! Get Instant Answers From Your Document.</p> */}
           </div>
         </div>
 
         <div className="app-topbar__actions">
           <span className="app-topbar__badge">
             <span className="app-topbar__badge-dot" aria-hidden="true" />
-            Powerd by AI
+            Powered by AI
           </span>
         </div>
       </div>
@@ -208,12 +209,13 @@ function App() {
                 <span className="hero__divider-line" aria-hidden="true" />
               </div>
 
-              <p className="hero__greeting">Hey, {getGreeting()}</p>
+              <p className="hero__greeting">Hey 😉</p>
               <h2 className="hero__title">
-              WELCOME <span className="hero__title-accent"></span>
+              WELCOME <span className="hero__title-accent">👾</span>
               </h2>
               <p className="hero__subtitle">
-                Upload a "Files" and ask questions about it. The AI will provide answers strictly based on the content of your document.
+                Upload a "Files" and ask questions about it. 
+                The AI will provide answers strictly based on the content of your document.
               </p>
 
               <UploadTrigger
